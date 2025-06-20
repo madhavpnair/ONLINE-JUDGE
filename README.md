@@ -1,3 +1,4 @@
 # ONLINE_JUDGE
-Dev_season 2025 June
-level 4 project
+An online platform to host CP contests<br>
+It avails features such as user profile,leaderboard, friends, AI powered plagiarism checker etc.
+
