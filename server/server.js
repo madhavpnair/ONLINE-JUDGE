@@ -12,6 +12,14 @@ DBConnection();
 app.use(express.json());
 app.use(express.urlencoded({ extended : true}));   //middleware
 
+
+const cors = require('cors');
+app.use(cors({
+  origin: 'http://localhost:5173', // your React dev server
+  credentials: true
+}));
+
+
 app.get("/",(req,res)=>(
     res.send("Hello World! from backend")
 ));
