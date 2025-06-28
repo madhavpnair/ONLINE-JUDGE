@@ -28,16 +28,21 @@ app.post("/register",async(req,res) =>{
 
     try{
 
-        const { firstname, lastname, email, password}=req.body;
+        const { firstname, lastname, email, username, password}=req.body;
 
-        if(!(firstname && lastname && email && password)){
+        if(!(firstname && lastname && email && username && password)){
             return res.status(400).send("Pls enter all the required info!!");
         }
 
         const existingUser= await User.findOne({email});
+        const existingUsername= await User.findOne({username});
 
+    
         if(existingUser){
             return res.status(400).send("User already exists with the same email");
+        }
+        if(existingUsername){
+            return res.status(400).send("User already exists with the same username");
         }
 
         const hashedPassword= await bcrypt.hash(password,10);
@@ -46,8 +51,12 @@ app.post("/register",async(req,res) =>{
             firstname,
             lastname,
             email,
+            username,
             password:hashedPassword
         });
+
+        //await newUser.save();
+
 
         const token=jwt.sign({id:user._id,email}, process.env.SECRET_KEY,{
             expiresIn:'1h',
@@ -66,6 +75,36 @@ app.post("/register",async(req,res) =>{
 });
 
 
+app.post("/login",async(req,res) =>{
+
+    try{
+
+        const { username, password}=req.body;
+        if(!(username && password)){
+            return res.status(400).send("Pls enter all the required info!!");
+        }
+
+        const existingUser= await User.findOne({username});
+        if(!existingUser){
+            return res.status(400).send("Invalid username!!");
+        }
+
+        const isPasswordValid= await bcrypt.compare(password,existingUser.password);
+        if(!isPasswordValid){
+            return res.status(400).send("Invalid password!!");
+        }
+        
+        res.status(200).json({message: "You have successfully logged in!",username});
+
+        }
+
+    catch(error){
+        console.log(error)
+    }
+    
+});
+
+
 app.listen(process.env.PORT,() => (
     console.log(`Server is listening on port ${process.env.PORT}!`)
 ));
@@ -73,3 +112,5 @@ app.listen(process.env.PORT,() => (
 app.get("/api", (req, res) => {
   res.send("Connected to Express via Vite proxy!");
 });
+
+
