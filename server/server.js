@@ -1,6 +1,7 @@
 const express=require('express');
 const app=express();
 const User = require("./models/User")
+const Problem = require("./models/Problem");
 const DBConnection= require ('./database/db');
 const bcrypt= require("bcryptjs"); //encrypt
 const jwt= require("jsonwebtoken");
@@ -22,6 +23,10 @@ app.use(cors({
 
 app.get("/",(req,res)=>(
     res.send("Hello World! from backend")
+));
+
+app.get("/home",(req,res)=>(
+    res.send("Welcome {username} to the home page!", {username: req.query.username})
 ));
 
 app.post("/register",async(req,res) =>{
@@ -104,13 +109,19 @@ app.post("/login",async(req,res) =>{
     
 });
 
-
+// MongoDB connection
 app.listen(process.env.PORT,() => (
     console.log(`Server is listening on port ${process.env.PORT}!`)
 ));
 
+//message to check if the server is running
 app.get("/api", (req, res) => {
   res.send("Connected to Express via Vite proxy!");
 });
 
 
+// Problem routes
+app.get('/problems', async (req, res) => {
+  const problems = await Problem.find();
+  res.json(problems);
+});

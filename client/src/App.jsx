@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
+import Home from './Home';
 
-function Home() {
+function Index() {
   const [msg, setMsg] = useState('');
 
   useEffect(() => {
@@ -27,9 +28,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Index />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         {/* Add other routes as needed */}
       </Routes>
     </Router>
