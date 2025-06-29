@@ -25,8 +25,13 @@ app.get("/",(req,res)=>(
     res.send("Hello World! from backend")
 ));
 
+//message to check if the server is running
+app.get("/api", (req, res) => {
+  res.send("Connected to Express via Vite proxy!");
+});
+
 app.get("/home",(req,res)=>(
-    res.send("Welcome {username} to the home page!", {username: req.query.username})
+    res.send(`Welcome {username} to the home page!`, {username: req.query.username})
 ));
 
 app.post("/register",async(req,res) =>{
@@ -109,19 +114,28 @@ app.post("/login",async(req,res) =>{
     
 });
 
-// MongoDB connection
-app.listen(process.env.PORT,() => (
-    console.log(`Server is listening on port ${process.env.PORT}!`)
-));
-
-//message to check if the server is running
-app.get("/api", (req, res) => {
-  res.send("Connected to Express via Vite proxy!");
-});
-
-
 // Problem routes
 app.get('/problems', async (req, res) => {
   const problems = await Problem.find();
   res.json(problems);
 });
+
+// Get a specific problem by ID
+app.get('/problems/:id', async (req, res) => {
+  const { id } = req.params;
+  const problem = await Problem.findById(id);
+  if (!problem) {   
+    return res.status(404).json({ error: 'Problem not found' });
+  }
+    res.json(problem);  
+});        
+
+// all routes and middlewares should be defined before this line
+//the server starts here
+app.listen(process.env.PORT,() => (
+    console.log(`Server is listening on port ${process.env.PORT}!`)
+));
+
+
+
+
