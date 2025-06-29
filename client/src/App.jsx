@@ -4,6 +4,7 @@ import Register from './Register';
 import Login from './Login';
 import Home from './Home';
 import Problems from './Problems';
+import ProblemDetail from './ProblemDetail';
 
 
 function Index() {
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/problems" element={<Problems />} />
+        <Route path="/problems/:id" element={<ProblemDetail />} /> 
         {/* Add more routes as needed */}
       </Routes>
     </Router>

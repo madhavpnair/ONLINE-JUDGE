@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 export default function Problems() {
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/problems') // full URL, no proxy needed
+    fetch('http://localhost:5000/problems') // full URL, no proxy needed btw i added proxy in vite.config.js???
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch problems');
         return res.json();
@@ -32,6 +34,8 @@ export default function Problems() {
         {problems.map((problem) => (
           <div
             key={problem._id}
+            onClick={() => navigate(`/problems/${problem._id}`)} // Navigate to problem detail
+            role="button"
             className="bg-white dark:bg-gray-800 shadow rounded-lg p-5 hover:shadow-lg transition"
           >
             <h2 className="text-xl font-semibold mb-2">{problem.title}</h2>

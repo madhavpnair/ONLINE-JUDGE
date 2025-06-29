@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ const Register = () => {
     username: '',
     password: ''
   });
+
+  const navigate = useNavigate(); // Initialize navigate for redirection  
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -22,6 +25,10 @@ const Register = () => {
     try {
       const res = await axios.post('http://localhost:5000/register', formData);
       alert(res.data.message);
+
+      // Navigate to the home page after successful registration
+      navigate('/home');
+      
     } catch (error) {
       alert(error.response?.data || "Registration failed");
     }
