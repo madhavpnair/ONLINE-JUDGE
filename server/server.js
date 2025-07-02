@@ -121,14 +121,16 @@ app.get('/problems', async (req, res) => {
 });
 
 // Get a specific problem by ID
-app.get('/problems/:id', async (req, res) => {
+//here we use /api/problems/:id to get the problem by id unlike /problems to avoid confusion with the react routing
+app.get('/api/problems/:id', async (req, res) => {
   const { id } = req.params;
   const problem = await Problem.findById(id);
   if (!problem) {   
     return res.status(404).json({ error: 'Problem not found' });
   }
     res.json(problem);  
-});        
+});    
+    
 
 // all routes and middlewares should be defined before this line
 //the server starts here

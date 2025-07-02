@@ -10,7 +10,7 @@ export default function ProblemDetail() {
   console.log("Fetching problem with ID:", id);
     // Fetch problem details by ID
   useEffect(() => {
-    fetch(`/problems/${id}`)
+    fetch(`/api/problems/${id}`)
       .then(res => {
         if(!res.ok)throw new Error('Failed to fetch problem');
         return res.json();

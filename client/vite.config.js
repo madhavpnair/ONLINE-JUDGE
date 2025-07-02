@@ -14,8 +14,10 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   plugins: [react(),tailwindcss(),],
   server: {
+    historyApiFallback: true, // Enable history API fallback for SPA routing
     proxy: {
       '/api': 'http://localhost:5000', // proxy /api → Express
     },
+
   },
 });
