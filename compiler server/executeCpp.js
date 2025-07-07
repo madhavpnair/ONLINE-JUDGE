@@ -1,31 +1,37 @@
-const fs=require('fs');
-const path = require('path');
-const { exec } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
 
-const outputPath = path.join(__dirname, 'outputs');//example: '/path/to/your/project/outputs'
+// this is for ESM compatibility (not using CommonJS)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-if(!fs.existsSync(outputPath)) {
+const outputPath = path.join(__dirname, 'outputs');
+
+if (!fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath, { recursive: true });
 }
 
 const executeCpp = async (filePath, inputPath) => {
-    const jobId = path.basename(filePath).split(".")[0]; // Extract job ID from file name
-    const outPath= path.join(outputPath, `${jobId}.out`); // Output file path
-
+    const jobId = path.basename(filePath).split(".")[0];
+    const outPath = path.join(outputPath, `${jobId}.out`);
+    console.log(`Output file path: ${outPath}`);
     return new Promise((resolve, reject) => {
-       exec(
-        `g++ ${filePath} -o ${outPath} && ${outPath} < ${inputPath}`, 
-        (error, stdout, stderr) => {
-            if (error) {
-                reject({error,stderr});
+        exec(
+            `g++ ${filePath} -o ${outPath} && ${outPath} < ${inputPath}`,  //use c++ compilation system
+            (error, stdout, stderr) => {
+                if (error) {
+                    reject({ error, stderr });
+                } else if (stderr) {
+                    reject(stderr);
+                } else {
+                    resolve(stdout);
+                }
             }
-            if (stderr) {
-                reject(stderr);
-            }
-            //code executed successfully, return the output
-            resolve(stdout);
-        });
+        );
     });
 };
 
-module.exports = executeCpp;
+
+export default executeCpp;
