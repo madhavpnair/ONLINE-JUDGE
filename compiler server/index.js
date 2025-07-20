@@ -83,16 +83,16 @@ app.post('/ai/hint/level2', async (req, res) => {
 });
 
 
-// Error explanation endpoint
-app.post('/ai/error-explanation', async (req, res) => { 
-  const { errorMessage, code } = req.body; // Ensure errorMessage and code are provided
-  try {
-    const explanation = await aiErrorExplanation(errorMessage, code);
-    res.json({ success: true, explanation });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
+// // Error explanation endpoint
+// app.post('/ai/error-explanation', async (req, res) => { 
+//   const { errorMessage, code } = req.body; // Ensure errorMessage and code are provided
+//   try {
+//     const explanation = await aiErrorExplanation(errorMessage, code);
+//     res.json({ success: true, explanation });
+//   } catch (err) {
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// });
 
 // Start server
 app.listen(8000, () => {

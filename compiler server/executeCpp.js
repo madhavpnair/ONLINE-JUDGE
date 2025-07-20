@@ -18,18 +18,24 @@ const executeCpp = async (filePath, inputPath) => {
     const outPath = path.join(outputPath, `${jobId}.out`);
     console.log(`Output file path: ${outPath}`);
     return new Promise((resolve, reject) => {
-        exec(
-            `g++ ${filePath} -o ${outPath} && ${outPath} < ${inputPath}`,  //use c++ compilation system
-            (error, stdout, stderr) => {
-                if (error) {
-                    reject({ error, stderr });
-                } else if (stderr) {
-                    reject(stderr);
-                } else {
-                    resolve(stdout);
-                }
+
+        const command = inputPath
+            ? `g++ "${filePath}" -o "${outPath}" && "${outPath}" < "${inputPath}"`
+            : `g++ "${filePath}" -o "${outPath}" && "${outPath}"`;
+            
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                console.error("Compilation or Execution Error:", error.message);
+                reject({ success: false, error: error.message, stderr });
+            } else if (stderr) {
+                console.error("Runtime STDERR:", stderr);
+                reject({ success: false, stderr });
+            } else {
+                resolve({ success: true, output: stdout });
             }
-        );
+        });
+
+
     });
 };
 
