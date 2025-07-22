@@ -30,7 +30,7 @@ app.post('/run', async (req, res) => {
     const filePath = await generateFile(language, code);
     const inputPath = await generateInputFile(input);
     const output = await executeCpp(filePath, inputPath);
-    res.json({ filePath, inputPath, output, success: true });
+    res.json(output);
     console.log(`File generated at: ${filePath}`);
     console.log(`Input file generated at: ${inputPath}`);
     console.log(`Output: ${output}`);
