@@ -18,7 +18,7 @@ export const aiCodeReview = async (code) => {
 export const aiHintLevel1 = async (problem) => {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = `Give a basic, first-level hint to help solve this problem:\n\n${problem}`;
+  const prompt = `Give a first-level hint to help solve this problem efficiently as a leetcode problem\n\n${problem}`;
   const result = await model.generateContent(prompt);
   const response = await result.response;
   return response.text();
@@ -28,7 +28,7 @@ export const aiHintLevel1 = async (problem) => {
 export const aiHintLevel2 = async (problem) => {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = `Give a deeper second-level hint that nudges the user toward the solution:\n\n${problem}`;
+  const prompt = `Give a deeper second-level hint that nudges the user toward the optimized solution:\n\n${problem}`;
   const result = await model.generateContent(prompt);
   const response = await result.response;
   return response.text();
@@ -38,7 +38,7 @@ export const aiHintLevel2 = async (problem) => {
 export const aiErrorExplanation = async (errorMessage,code) => {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = `Explain the following error message in simple terms and suggest how to fix it:\n\n${errorMessage}:\n${code}`;
+  const prompt = `the following code has some critical compile time/ run time errors explain and help to fix it:\n\n${errorMessage}:\n${code}`;
   const result = await model.generateContent(prompt);
   const response = await result.response;
   return response.text();

@@ -1,0 +1,14 @@
+.split {
+  display: flex;
+  height: 100%;
+}
+
+.split .gutter {
+  background-color: #ddd;
+  background-clip: content-box;
+}
+
+.split .gutter.gutter-horizontal {
+  cursor: col-resize;
+  width: 8px;
+}

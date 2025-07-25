@@ -6,10 +6,12 @@ import dotenv from 'dotenv';
 import generateFile from './generateFile.js';
 import executeCpp from './executeCpp.js';
 import generateInputFile from './generateInputFile.js';
-import { aiCodeReview, aiHintLevel1, aiHintLevel2 } from './aifeatures.js';
+import { aiCodeReview, aiHintLevel1, aiHintLevel2 ,aiErrorExplanation} from './aifeatures.js';
 
 const app = express();
 dotenv.config();
+
+const PORT = process.env.PORT || 8000;
 
 app.use(cors());
 app.use(express.json());
@@ -63,6 +65,7 @@ app.get('/ai/hint/level1', (req, res) => {
 
 app.post('/ai/hint/level1', async (req, res) => {
   const { problem } = req.body;
+  console.log("Incoming Problem:", problem); // debugging
   try {
     const hint = await aiHintLevel1(problem);
     res.json({ success: true, hint });
@@ -83,18 +86,18 @@ app.post('/ai/hint/level2', async (req, res) => {
 });
 
 
-// // Error explanation endpoint
-// app.post('/ai/error-explanation', async (req, res) => { 
-//   const { errorMessage, code } = req.body; // Ensure errorMessage and code are provided
-//   try {
-//     const explanation = await aiErrorExplanation(errorMessage, code);
-//     res.json({ success: true, explanation });
-//   } catch (err) {
-//     res.status(500).json({ success: false, error: err.message });
-//   }
-// });
+// Error explanation endpoint
+app.post('/ai/error-explanation', async (req, res) => { 
+  const { errorMessage, code } = req.body; // Ensure errorMessage and code are provided
+  try {
+    const explanation = await aiErrorExplanation(errorMessage, code);
+    res.json({ success: true, explanation });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 
 // Start server
-app.listen(8000, () => {
+app.listen(PORT, () => {
   console.log('server is listening at port 8000!');
 });
