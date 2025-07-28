@@ -9,7 +9,7 @@ export default function Problems() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/problems') // full URL, no proxy needed btw i added proxy in vite.config.js???
+    fetch('https://online-judge-server-wyyf.onrender.com/problems') // full URL, no proxy needed btw i added proxy in vite.config.js???
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch problems');
         return res.json();
