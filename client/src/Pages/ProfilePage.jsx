@@ -4,7 +4,7 @@ import axios from "axios";
 const Profile = () => {
   const [user, setUser] = useState(null);
 
-  // Fetch profile data on mount
+  // Fetch profile data on mount []
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -15,7 +15,7 @@ const Profile = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, []); 
 
   if (!user) {
     return <div className="text-center mt-10 text-lg">Loading profile...</div>;

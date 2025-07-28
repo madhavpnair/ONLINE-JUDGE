@@ -5,7 +5,7 @@ dotenv.config();
 const Problem = require('./models/Problem');
 const DBConnection = require('./database/db');
 
-DBConnection(); // Connect to MongoDB
+DBConnection(); 
 
 const problems = [
   {
@@ -64,10 +64,10 @@ const problems = [
 
 async function seedProblems() {
   try {
-    // Optional: Clear existing data
+    //Clear existing data
     await Problem.deleteMany(); 
 
-    // Insert new problems
+    //Insert new problems
     await Problem.insertMany(problems);
     console.log("✅ Problems inserted successfully!");
     process.exit(0);

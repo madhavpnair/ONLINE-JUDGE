@@ -38,8 +38,8 @@ export default function Compiler({ problemst, testcases }) {
 
       // Else run all test cases
       let results = [];
-      //console.log(`Running ${testcases.length} test cases...`);
-      console.log(testcases);
+  
+      console.log(testcases); //for debugging
       for (let i = 0; i < 4; i++) {
         const tc = testcases[i];
 
@@ -85,7 +85,7 @@ export default function Compiler({ problemst, testcases }) {
         darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-800'
       } min-h-screen p-6 transition-all`}
     >
-      {/* Header */}
+      
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">
           Code Compiler
@@ -119,7 +119,7 @@ export default function Compiler({ problemst, testcases }) {
         </div>
       </div>
 
-      {/* Language Selector */}
+      
       <select
         className="p-2 mb-4 border rounded bg-white text-black dark:bg-gray-800 dark:text-white"
         value={language}
@@ -131,9 +131,10 @@ export default function Compiler({ problemst, testcases }) {
         <option value="c">C</option>
       </select>
 
-      {/* Code Editor */}
+      {/* here goes the Code Editor */}
       <div className="h-[300px] w-full border rounded overflow-hidden mb-4">
-        <Editor
+        {/* imported environment */}
+        <Editor 
           height="100%"
           width="100%"
           defaultLanguage={language}
@@ -173,7 +174,7 @@ export default function Compiler({ problemst, testcases }) {
         </pre>
       </div>
 
-      {/* Modals */}
+      {/* Modals for ai features*/}
       {showHint1 && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-xl shadow-lg w-96">

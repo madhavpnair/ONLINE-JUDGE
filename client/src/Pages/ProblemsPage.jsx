@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import Navbar from '../Components/Navbar';
 
 export default function Problems() {
   const [problems, setProblems] = useState([]);
@@ -25,6 +26,7 @@ export default function Problems() {
 
   return (
     <div className="min-h-screen px-6 py-10 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white">
+      <Navbar />
       <h1 className="text-3xl font-bold text-center mb-6">📘 Problem Set</h1>
 
       {loading && <p className="text-center">Loading problems...</p>}

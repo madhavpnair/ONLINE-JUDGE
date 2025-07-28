@@ -1,9 +1,9 @@
 // tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class',
+  darkMode: 'class', // Enable dark mode support toggling but not working
   content: [
-    "./index.html", // Your main HTML file
+    "./index.html", 
     "./src/**/*.{js,ts,jsx,tsx}", // Scans all JS, TS, JSX, TSX files in the src folder
   ],
    theme: {

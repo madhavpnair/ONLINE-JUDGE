@@ -5,7 +5,7 @@ import { useAuth } from '../Context/AuthContext';
 import { SunIcon, MoonIcon, UserCircle } from 'lucide-react';
 
 const Navbar = () => {
-  const { darkMode, toggleTheme } = useContext(ThemeContext);
+  // const { darkMode, toggleTheme } = useContext(ThemeContext);
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const Navbar = () => {
 
     if (res.ok) {
       logout(); // clears user info from localStorage
-      navigate('/login'); // then redirect home
+      navigate('/login'); // then redirect to login page
     } else {
       console.error('Logout failed:', await res.json());
     }
@@ -55,12 +55,12 @@ const Navbar = () => {
           <UserCircle size={26} />
         </Link>
 
-        <button
+        {/* <button
           onClick={toggleTheme}
           className="hover:text-yellow-400 transition"
         >
           {darkMode ? <SunIcon size={20} /> : <MoonIcon size={20} />}
-        </button>
+        </button> */}
 
         <button
           onClick={handleLogout}

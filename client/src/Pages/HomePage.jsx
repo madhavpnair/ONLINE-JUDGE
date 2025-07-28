@@ -1,7 +1,12 @@
 import Navbar from '../Components/Navbar'; 
 import { Users, FileText, ClipboardList, Code } from 'lucide-react';
+import { useState } from 'react';
+// import { buttonClass, glitter } from '../Components/Styles';
 
 export default function Home() {
+
+  const [darkMode, setDarkMode] = useState(false);
+
   let username = 'coder';
   try {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -36,10 +41,22 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white min-h-screen transition-colors duration-500">
+    // <div className="bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-white min-h-screen transition-colors duration-500">
+    <div className={`${
+        darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-800'
+      } min-h-screen p-6 transition-all`}
+      >
       <Navbar />
+      
+          {/* Dark Mode Toggle Button */}
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            // className={`${buttonClass} bg-gray-700 hover:bg-gray-800 ${glitter}`}
+          >
+            {darkMode ? '☀️ Light' : '🌙 Dark'}
+          </button>
 
-      {/* Main Content */}
+      
       <main className="p-8 text-center">
         <h1 className="text-4xl font-bold mb-4">🏠 Welcome {username}!</h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-12">Solve problems. Compete on the leaderboard. Track your profile.</p>

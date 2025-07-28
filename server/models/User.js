@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
-  // New fields
   problemsSolved: {
     type: Number,
     default: 0,
@@ -45,7 +44,7 @@ const userSchema = new mongoose.Schema({
   submissions: [
     {
       problemId: String,
-      status: String, // e.g. "Accepted", "Wrong Answer"
+      status: String, 
       language: String,
       submittedAt: { type: Date, default: Date.now },
     }
