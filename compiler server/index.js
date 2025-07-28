@@ -5,6 +5,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import generateFile from './generateFile.js';
 import executeCpp from './executeCpp.js';
+import executeC from './executeC.js';
+import executePython from './executePython.js';
+import executeJava from './executeJava.js'; 
 import generateInputFile from './generateInputFile.js';
 import { aiCodeReview, aiHintLevel1, aiHintLevel2 ,aiErrorExplanation} from './aifeatures.js';
 
@@ -24,18 +27,33 @@ app.get('/', (req, res) => {
 
 app.post('/run', async (req, res) => {
   const { language, code, input } = req.body;
-  if (code === undefined) {
-    return res.status(400).json({ success: false, error: 'Empty code body' });
-  }
+
+  if (!code) return res.status(400).json({ success: false, error: 'Empty code body' });
 
   try {
     const filePath = await generateFile(language, code);
     const inputPath = await generateInputFile(input);
-    const output = await executeCpp(filePath, inputPath);
+
+    let output;
+
+    switch (language) {
+      case 'cpp':
+        output = await executeCpp(filePath, inputPath);
+        break;
+      case 'c':
+        output = await executeC(filePath, inputPath); 
+        break;
+      case 'python':
+        output = await executePython(filePath, inputPath);
+        break;
+      case 'java':
+        output = await executeJava(filePath, inputPath);
+        break;
+      default:
+        return res.status(400).json({ success: false, error: 'Unsupported language' });
+    }
+
     res.json(output);
-    console.log(`File generated at: ${filePath}`);
-    console.log(`Input file generated at: ${inputPath}`);
-    console.log(`Output: ${output}`);
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }

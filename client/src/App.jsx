@@ -4,8 +4,14 @@ import Login from './Pages/LoginPage';
 import Problems from './Pages/ProblemsPage';
 import ProblemDetail from './Pages/ProblemDetailPage';
 import HomePage from './Pages/HomePage';
-import Standings from './Pages/StandingsPage';
+import Leaderboard from './Pages/LeaderboardPage';
+
+// import { ThemeProvider } from './Context/ThemeContext';
+import Contests from './Pages/ContestsPage';
+import Submissions from './Pages/SubmissionsPage';
+
 import { useAuth } from './Context/AuthContext';
+import Profile from './Pages/ProfilePage';
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -16,7 +22,7 @@ function ProtectedRoute({ children }) {
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100 relative"> {/* 👈 Container helps fixed modal work */}
+    <div className="min-h-screen bg-gray-100 relative"> 
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<Register />} />
@@ -36,9 +42,24 @@ export default function App() {
             <ProblemDetail />
           </ProtectedRoute>
         } />
-        <Route path="/standings" element={
+        <Route path="/profile" element={
           <ProtectedRoute>
-            <Standings />
+            <Profile />
+          </ProtectedRoute>
+        } />
+        <Route path="/leaderboard" element={
+          <ProtectedRoute>
+            <Leaderboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/contests" element={
+          <ProtectedRoute>
+            <Contests />
+          </ProtectedRoute>
+        } />
+        <Route path="/submissions" element={
+          <ProtectedRoute>
+            <Submissions />
           </ProtectedRoute>
         } />
       </Routes>

@@ -89,16 +89,19 @@ export default function ProblemDetail() {
             </section>
           </div>
         </div>
+        
 
         {/* Compiler Panel */}
         <div className="bg-gray-50 dark:bg-gray-950 p-4 overflow-y-auto">
-          <Compiler
-            problemId={id}
-            sampleInput={problem.sampleInput}
-            expectedOutput={problem.sampleOutput}
-            problemst={problem.description}
-          />
+          console.log("problem.testcases", problem?.testcases);
+          {problem && problem.testCases && (
+            <Compiler
+              problemst={problem.description}
+              testcases={problem.testCases}
+            />
+          )}
         </div>
+
       </Split>
     </div>
   );

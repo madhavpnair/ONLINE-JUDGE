@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext'; // import Auth context
+import { useAuth } from '../Context/AuthContext'; // 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
-  const { login } = useAuth(); // use login from context
+  const { login } = useAuth(); //the login fn is there at Authcontext
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -22,18 +22,18 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/login', formData);
+      const res = await axios.post('http://localhost:5000/login', formData,{withCredentials: true});
 
-      const { message, username } = res.data;
+      const { username } = res.data;
 
       if (!username) {
         throw new Error("Invalid response from server");
       }
 
       //  Save login state
-      login({ username }); // You can include more data if needed
+      login({ username }); 
 
-      alert(message); // success message from backend
+      // alert(message); // success message from backend
       navigate('/home'); //  go to home
 
     } catch (error) {
