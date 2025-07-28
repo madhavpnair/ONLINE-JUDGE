@@ -19,7 +19,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:5173', // React frontend
+  origin: [
+    'http://localhost:5173', // for local dev
+    'https://online-judge-client-q3xz.onrender.com' // ✅ your deployed frontend
+  ],
   credentials: true
 }));
 
